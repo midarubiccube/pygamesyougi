@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 import sys
 from koma import Komaclass
+from draw import draw_startstage
 
 x, y = 800, 800
 
@@ -12,6 +13,12 @@ def main():
     pygame.display.set_caption("Pygame Test")
     icom = pygame.image.load("asset/icon.png")
     pygame.display.set_icon(icom)
+    press_space = True
+    while(press_space):
+        draw_startstage()
+        for event in pygame.event.get(): # 終了処理
+            if  event.type == KEYDOWN and event.key == K_SPACE:
+                press_space = False
     bg = pygame.image.load("asset/back.jpg").convert_alpha()
     rect_bg = bg.get_rect()
     koma_group = pygame.sprite.Group()
@@ -45,3 +52,4 @@ print(koma_img_load())
 
 def Coordinate_transformation(x, y, rect):
     return  rect
+
