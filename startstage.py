@@ -3,6 +3,8 @@ from pygame.locals import *
 
 def startstage(screen, SCR_RECT):
     press_space = True
+    pygame.mixer.music.load("asset/タイトル.wav")
+    pygame.mixer.music.play(loops=1, start=0.0)
     while(press_space):
         screen.fill((0, 0, 0, 255))
         title_font = pygame.font.SysFont(None, 80)
@@ -24,3 +26,4 @@ def startstage(screen, SCR_RECT):
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
+    pygame.mixer.music.stop()

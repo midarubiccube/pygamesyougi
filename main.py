@@ -3,11 +3,13 @@ from pygame.locals import *
 import sys
 from koma import Komaclass
 from startstage import startstage
+from wxtest import login
+import threading
 
 x, y = 800, 800
 
 koma_route = ["ginn", "ginnnaru", "gyoku", "hisya", "hisyanaru", "ho", "honaru", "kaku", "kakunaru", "keima", "keimanaru", "kinn", "kyousya", "kyousyanaru", "ou"]
-SCR_RECT = Rect(0, 0, 600, 400)
+SCR_RECT = Rect(0, 0, 800, 500)
 
 #初期化する
 def init():
@@ -18,13 +20,7 @@ def init():
     startstage(screen, SCR_RECT)
     return screen
 
-def main():
-    screen = init()
-    bg = pygame.image.load("asset/back.jpg").convert_alpha()
-    rect_bg = bg.get_rect()
-    koma_group = pygame.sprite.Group()
-    for i in range(10):
-        koma_group.add(Komaclass(koma_route[5], "ho"))
+def syori(screen, bg, rect_bg):
     while(True):
         screen.fill((255, 255, 255, 0)) # 背景色の指定。RGBのはず
         screen.blit(bg, rect_bg) # 背景画像の描画
@@ -39,6 +35,23 @@ def main():
                 if event.key == K_ESCAPE:
                     pygame.quit()
                     sys.exit()
+
+def main():
+    screen = init()
+    bg = pygame.image.load("asset/back.jpg").convert_alpha()
+    rect_bg = bg.get_rect()
+    rect_bg.x = 150
+    rect_bg.y = 0
+    koma_group = pygame.sprite.Group()
+    for i in range(10):
+        koma_group.add(Komaclass(koma_route[5], "ho"))
+    th = threading.Thread(target=login)
+    th.start()
+    th1 = threading.Thread(target=syori(screen, bg, rect_bg))
+    th1.start()
+    th.join()
+    th1.join()
+    
 
 if __name__ == "__main__":
     main()
