@@ -7,6 +7,8 @@ from draw import draw_startstage
 x, y = 800, 800
 
 koma_route = ["ginn", "ginnnaru", "gyoku", "hisya", "hisyanaru", "ho", "honaru", "kaku", "kakunaru", "keima", "keimanaru", "kinn", "kyousya", "kyousyanaru", "ou"]
+SCR_RECT = Rect(0, 0, 600, 400)
+
 def main():
     pygame.init() # 初期化
     screen = pygame.display.set_mode((600, 400))
@@ -15,10 +17,14 @@ def main():
     pygame.display.set_icon(icom)
     press_space = True
     while(press_space):
-        draw_startstage()
+        draw_startstage(screen, SCR_RECT)
+        pygame.display.update()
         for event in pygame.event.get(): # 終了処理
             if  event.type == KEYDOWN and event.key == K_SPACE:
                 press_space = False
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
     bg = pygame.image.load("asset/back.jpg").convert_alpha()
     rect_bg = bg.get_rect()
     koma_group = pygame.sprite.Group()
