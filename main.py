@@ -26,7 +26,7 @@ def syori(screen, bg, rect_bg):
         screen.blit(bg, rect_bg) # 背景画像の描画
         pygame.time.wait(30) # 更新間隔。多分ミリ秒
         pygame.display.update() # 画面更新
-
+        print
         for event in pygame.event.get(): # 終了処理
             if event.type == QUIT:
                 pygame.quit()
@@ -35,6 +35,8 @@ def syori(screen, bg, rect_bg):
                 if event.key == K_ESCAPE:
                     pygame.quit()
                     sys.exit()
+            if event.type == MOUSEBUTTONDOWN and event.button == 1:
+                print(pygame.mouse.get_pos())
 
 def main():
     screen = init()
@@ -42,23 +44,8 @@ def main():
     rect_bg = bg.get_rect()
     rect_bg.x = 150
     rect_bg.y = 0
-    koma_group = pygame.sprite.Group()
-    for i in range(10):
-        koma_group.add(Komaclass(koma_img_route[5], "ho", opponent=False))
-    for i in range(2):
-        koma_group.add(Komaclass(koma_img_route[1], "ginn", opponent=False))
-        koma_group = pygame.sprite.Group()
-    koma_group.add(Komaclass(koma_img_route[2], "gyoku", opponent=True))
-    syori(screen, bg, rect_bg)
+    
 
+    syori(screen, bg, rect_bg)
 if __name__ == "__main__":
     main()
-
-def koma_img_load():
-    y
-
-print(koma_img_load())
-
-def Coordinate_transformation(x, y, rect):
-    return  rect
-
