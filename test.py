@@ -1,64 +1,109 @@
 import pygame
-from pygame.locals import *
-import sys
- 
-SCR_RECT = Rect(0, 0, 640, 480)
- 
-class MySprite(pygame.sprite.Sprite):
-    def __init__(self, filename, x, y, vx, vy):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load(filename).convert_alpha()
-        width = self.image.get_width()
-        height = self.image.get_height()
-        self.rect = Rect(x, y, width, height)
-        self.vx = vx
-        self.vy = vy
-        
+
+
+class Button:
+    def __init__(self, x, y, w, h, text=''):
+       self.rect = pygame.Rect(x, y, w, h)
+       self.color = (200,200,200)
+       self.text = text
+       self.txt_surface = FONT.render(text, True, self.color)
+       self.active = False
     def update(self):
-        self.rect.move_ip(self.vx, self.vy)
-        # 壁にぶつかったら跳ね返る
-        if self.rect.left < 0 or self.rect.right > SCR_RECT.width:
-            self.vx = -self.vx
-        if self.rect.top < 0 or self.rect.bottom > SCR_RECT.height:
-            self.vy = -self.vy
-        # 画面からはみ出ないようにする
-        self.rect = self.rect.clamp(SCR_RECT)
-    
+       width = max(200, self.txt_surface.get_width()+10)
+       self.rect.w = width
     def draw(self, screen):
-        screen.blit(self.image, self.rect)
- 
+       pygame.draw.rect(screen, self.color, self.rect, 0)
+       self.txt_surface = FONT.render(self.text, True, (0,0,0))
+       screen.blit(self.txt_surface, (self.rect.x+5, self.rect.y+5))
+    def handle_event(self, event):
+        if event.type == pygame.MOUSEBUTTONUP:
+            if self.rect.collidepoint(event.pos):
+                self.active = True
+            else:
+                self.active = False
+    def onClick(self):
+        r = self.active
+        self.active = False
+        return r
+
+
+class InputBox:
+    def __init__(self, x, y, w, h, text=''):
+        self.rect = pygame.Rect(x, y, w, h)
+        self.color = COLOR_INACTIVE
+        self.text = text
+        self.txt_surface = FONT.render(text, True, self.color)
+        self.active = False
+    def handle_event(self, event):
+        r = ""
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if self.rect.collidepoint(event.pos):
+                self.active = not self.active
+            else:
+                self.active = False
+            self.color = COLOR_ACTIVE if self.active else COLOR_INACTIVE
+        if event.type == pygame.KEYDOWN:
+            if self.active:
+                if event.key == pygame.K_RETURN:
+                    r = self.text
+                    self.text = ''
+                elif event.key == pygame.K_DELETE:
+                    pass
+                elif event.key == pygame.K_BACKSPACE:
+                    self.text = self.text[:-1]
+                else:
+                    self.text += event.unicode
+                self.txt_surface = FONT.render(self.text, True, self.color)
+        return r
+    def update(self):
+        width = max(200, self.txt_surface.get_width()+10)
+        self.rect.w = width
+    def draw(self, screen):
+        screen.blit(self.txt_surface, (self.rect.x+5, self.rect.y+5))
+        pygame.draw.rect(screen, self.color, self.rect, 2)
+
+
 def main():
-    pygame.init()
-    screen = pygame.display.set_mode(SCR_RECT.size)
-    pygame.display.set_caption(u"スプライトの使い方")
-    
-    # スプライトを作成
-    python1 = MySprite("asset/icon.png", 0, 0, 2, 2)
-    python2 = MySprite("asset/icon.png", 10, 10, 5, 5)
-    python3 = MySprite("asset/icon.png", 320, 240, -2, 3)
-    
     clock = pygame.time.Clock()
-    
-    while True:
-        clock.tick(60)  # 60fps
-        
-        screen.fill((0,0,255))
-        
-        # スプライトを更新
-        python1.update()
-        python2.update()
-        python3.update()
-        
-        # スプライトを描画
-        python1.draw(screen)
-        python2.draw(screen)
-        python3.draw(screen)
-        
-        pygame.display.update()
-        
+    input_box1 = InputBox(100, 100, 140, 32)
+    input_box2 = InputBox(100, 300, 140, 32)
+    input_boxes = [input_box1, input_box2]
+    button1 = Button(100, 140, 140, 32, "button1")
+    button2 = Button(100, 340, 140, 32, "button2")
+    buttons = [button1, button2]
+
+    exit_sw = False
+    while not exit_sw:
         for event in pygame.event.get():
-            if event.type == QUIT:
-                sys.exit()
- 
-if __name__ == "__main__":
-    main()
+            if event.type == pygame.QUIT:
+                exit_sw = True
+            for n, box in enumerate(input_boxes):
+                r = box.handle_event(event)
+                if r != "":
+                    buttons[n].text = r
+            for box in input_boxes:
+                box.update()
+            for b in buttons:
+                b.handle_event(event)
+            for b in buttons:
+                b.update()
+        screen.fill((30, 30, 30))
+        for box in input_boxes:
+            box.draw(screen)
+        for b in buttons:
+            b.draw(screen)
+        for b in buttons:
+            if b.onClick():
+                print(b.text+" hit")
+
+        pygame.display.flip()
+        clock.tick(30)
+
+
+pygame.init()
+screen = pygame.display.set_mode((640, 480))
+COLOR_INACTIVE = pygame.Color('lightskyblue3')
+COLOR_ACTIVE = pygame.Color('dodgerblue2')
+FONT = pygame.font.SysFont("hg正楷書体pro", 16) #Ubuntu18.04 標準日本語フォント
+main()
+pygame.quit()

@@ -8,7 +8,7 @@ import threading
 
 x, y = 800, 800
 
-koma_route = ["ginn", "ginnnaru", "gyoku", "hisya", "hisyanaru", "ho", "honaru", "kaku", "kakunaru", "keima", "keimanaru", "kinn", "kyousya", "kyousyanaru", "ou"]
+koma_img_route = ["ginn", "ginnnaru", "gyoku", "hisya", "hisyanaru", "ho", "honaru", "kaku", "kakunaru", "keima", "keimanaru", "kinn", "kyousya", "kyousyanaru", "ou"]
 SCR_RECT = Rect(0, 0, 800, 500)
 
 #初期化する
@@ -16,7 +16,7 @@ def init():
     pygame.init() # 初期化
     screen = pygame.display.set_mode(SCR_RECT.size)
     pygame.display.set_caption("Pygame Test")
-    pygame.display.set_icon(pygame.image.load("asset/icon.png"))
+    pygame.display.set_icon(pygame.transform.flip(pygame.image.load("asset/icon.png"), 90, 90))
     startstage(screen, SCR_RECT)
     return screen
 
@@ -44,14 +44,12 @@ def main():
     rect_bg.y = 0
     koma_group = pygame.sprite.Group()
     for i in range(10):
-        koma_group.add(Komaclass(koma_route[5], "ho"))
-    th = threading.Thread(target=login)
-    th.start()
-    th1 = threading.Thread(target=syori(screen, bg, rect_bg))
-    th1.start()
-    th.join()
-    th1.join()
-    
+        koma_group.add(Komaclass(koma_img_route[5], "ho", opponent=False))
+    for i in range(2):
+        koma_group.add(Komaclass(koma_img_route[1], "ginn", opponent=False))
+        koma_group = pygame.sprite.Group()
+    koma_group.add(Komaclass(koma_img_route[2], "gyoku", opponent=True))
+    syori(screen, bg, rect_bg)
 
 if __name__ == "__main__":
     main()
