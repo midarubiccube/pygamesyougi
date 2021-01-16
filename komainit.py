@@ -6,6 +6,6 @@ koma_img_route = ["ginn", "ginnnaru", "gyoku", "hisya", "hisyanaru", "ho", "hona
 
 def koma_init():
     koma_group = pygame.sprite.Group()
-    for i in range(10):
-        koma_group.add(Komaclass(i, 7, koma_img_route[5], "ho", opponent=False))
+    for i in range(9):
+        koma_group.add(Komaclass(i, 6, koma_img_route[5], "ho", opponent=False))
     return koma_group
