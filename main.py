@@ -5,6 +5,7 @@ from koma import Komaclass
 from startstage import startstage
 from wxtest import login
 import threading
+from komainit import koma_init
 
 x, y = 800, 800
 
@@ -18,15 +19,16 @@ def init():
     pygame.display.set_caption("Pygame Test")
     pygame.display.set_icon(pygame.transform.flip(pygame.image.load("asset/icon.png"), 90, 90))
     startstage(screen, SCR_RECT)
-    return screen
+    koma_group = koma_init()
+    return screen, koma_group
 
-def syori(screen, bg, rect_bg):
+def syori(screen, koma_group, bg, rect_bg):
     while(True):
         screen.fill((255, 255, 255, 0)) # 背景色の指定。RGBのはず
         screen.blit(bg, rect_bg) # 背景画像の描画
+        koma_group.draw(screen)
         pygame.time.wait(30) # 更新間隔。多分ミリ秒
         pygame.display.update() # 画面更新
-        print
         for event in pygame.event.get(): # 終了処理
             if event.type == QUIT:
                 pygame.quit()
@@ -39,13 +41,12 @@ def syori(screen, bg, rect_bg):
                 print(pygame.mouse.get_pos())
 
 def main():
-    screen = init()
+    screen, koma_group = init()
     bg = pygame.image.load("asset/back.jpg").convert_alpha()
     rect_bg = bg.get_rect()
     rect_bg.x = 150
     rect_bg.y = 0
-    
+    syori(screen, koma_group, bg, rect_bg)
 
-    syori(screen, bg, rect_bg)
 if __name__ == "__main__":
     main()
