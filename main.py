@@ -9,7 +9,6 @@ from komainit import koma_init
 
 x, y = 800, 800
 
-koma_img_route = ["ginn", "ginnnaru", "gyoku", "hisya", "hisyanaru", "ho", "honaru", "kaku", "kakunaru", "keima", "keimanaru", "kinn", "kyousya", "kyousyanaru", "ou"]
 SCR_RECT = Rect(0, 0, 800, 500)
 
 #初期化する
