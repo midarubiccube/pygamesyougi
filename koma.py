@@ -21,11 +21,20 @@ class Komaclass(pygame.sprite.Sprite):
         self.promotionflag = promotionflag
         self.promotion = False
         self.opponent = opponent
-    
+        
+    def draw(self, screen):
+        screen.blit(self.image, self.rect)
+
+    def update(self, MOUSE_CLICK_FLAG):
+        if self.rect
+        if MOUSE_CLICK_FLAG == True:
+            x, y = pygame.mouse.get_pos()
+            if self.rect.collidepoint(x, y):
+                print("on " + str(self.kind))
+                self.rect.x = x
+                self.rect.y = y
+
     def Coordinate_transformation(self, x, y, rect):
         rect.x = x*53.5+171
         rect.y = y*52.5+19
         return rect
-        
-    def draw(self, screen):
-        screen.blit(self.image, self.rect)

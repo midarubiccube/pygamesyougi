@@ -8,7 +8,7 @@ def startstage(screen, SCR_RECT):
     while(press_space):
         screen.fill((0, 0, 0, 255))
         title_font = pygame.font.SysFont(None, 80)
-        title = title_font.render("SyouGi online", False, (255,0,0))
+        title = title_font.render("Syougi online", False, (255,0,0))
         screen.blit(title, ((SCR_RECT.width-title.get_width())/2, 100))
         # PUSH STARTを描画
         push_font = pygame.font.SysFont(None, 40)

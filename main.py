@@ -11,6 +11,8 @@ x, y = 800, 800
 
 SCR_RECT = Rect(0, 0, 800, 500)
 
+
+
 #初期化する
 def init():
     pygame.init() # 初期化
@@ -21,13 +23,8 @@ def init():
     koma_group = koma_init()
     return screen, koma_group
 
-def syori(screen, koma_group, bg, rect_bg):
+def syori(screen, koma_group, bg, rect_bg, MOUSE_CLICK_FLAG = False):
     while(True):
-        screen.fill((255, 255, 255, 0)) # 背景色の指定。RGBのはず
-        screen.blit(bg, rect_bg) # 背景画像の描画
-        koma_group.draw(screen)
-        pygame.time.wait(30) # 更新間隔。多分ミリ秒
-        pygame.display.update() # 画面更新
         for event in pygame.event.get(): # 終了処理
             if event.type == QUIT:
                 pygame.quit()
@@ -37,8 +34,18 @@ def syori(screen, koma_group, bg, rect_bg):
                     pygame.quit()
                     sys.exit()
             if event.type == MOUSEBUTTONDOWN and event.button == 1:
+                MOUSE_CLICK_FLAG = True
                 print(pygame.mouse.get_pos())
-
+            if MOUSE_CLICK_FLAG == True and not event.type == MOUSEBUTTONDOWN:
+                MOUSE_CLICK_FLAG = False
+                print("ok")
+        screen.fill((255, 255, 255, 0)) # 背景色の指定。RGBのはず
+        screen.blit(bg, rect_bg) # 背景画像の描画
+        koma_group.update(MOUSE_CLICK_FLAG)
+        koma_group.draw(screen)
+        pygame.time.wait(60) # 更新間隔。多分ミリ秒
+        pygame.display.update() # 画面更新
+        
 def main():
     screen, koma_group = init()
     bg = pygame.image.load("asset/back.jpg").convert_alpha()
