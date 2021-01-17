@@ -13,26 +13,31 @@ class Komaclass(pygame.sprite.Sprite):
             if opponent == True:
                 self.promotionimage = pygame.transform.flip(self.image, 90, 90)
 
-        width = self.image.get_width()
-        height = self.image.get_height()
-        self.rect = self.Coordinate_transformation(x, y, Rect(0, 0, width, height))
+        self.width = self.image.get_width()
+        self.height = self.image.get_height()
+        self.rect = self.Coordinate_transformation(x, y, Rect(0, 0, self.width, self.height))
 
         self.kind = kind
         self.promotionflag = promotionflag
         self.promotion = False
         self.opponent = opponent
+        self.mouseclickflag = False
+        self.mousetouchflag = False
         
     def draw(self, screen):
         screen.blit(self.image, self.rect)
 
-    def update(self, MOUSE_CLICK_FLAG):
-        if self.rect
-        if MOUSE_CLICK_FLAG == True:
-            x, y = pygame.mouse.get_pos()
-            if self.rect.collidepoint(x, y):
-                print("on " + str(self.kind))
-                self.rect.x = x
-                self.rect.y = y
+    def update(self, MOUSE_CLICK_FLAG, mx, my, koma_group):
+        if self.opponent == False:
+            if MOUSE_CLICK_FLAG == True:
+                if self.rect.collidepoint(mx, my) and not self.mousetouchflag == True:
+                    koma_list = pygame.sprite.spritecollide(self, koma_group, dokill= False, collided = None)
+                    if len(koma_list) > 1:
+                        for sprite in koma_list:
+                            if not sprite == self:
+                                sprite.mousetouchflag = True
+                    self.rect.x = mx - self.width / 2
+                    self.rect.y = my - self.height / 2
 
     def Coordinate_transformation(self, x, y, rect):
         rect.x = x*53.5+171
