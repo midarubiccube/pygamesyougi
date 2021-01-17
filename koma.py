@@ -44,7 +44,7 @@ class Komaclass(pygame.sprite.Sprite):
             else:
                 if self.mouseclickflag == True:
                     self.mouseclickflag = False
-                    #ドラッ供御の処理
+                    #ドラック後の処理
                     print("ok")
 
     def Coordinate_transformation(self, x, y, rect):
