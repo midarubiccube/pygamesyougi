@@ -17,6 +17,8 @@ class Komaclass(pygame.sprite.Sprite):
         self.height = self.image.get_height()
         self.rect = self.Coordinate_transformation(x, y, Rect(0, 0, self.width, self.height))
 
+        self.x = x
+        self.y = y
         self.kind = kind
         self.promotionflag = promotionflag
         self.promotion = False
@@ -38,6 +40,12 @@ class Komaclass(pygame.sprite.Sprite):
                                 sprite.mousetouchflag = True
                     self.rect.x = mx - self.width / 2
                     self.rect.y = my - self.height / 2
+                    self.mouseclickflag = True
+            else:
+                if self.mouseclickflag == True:
+                    self.mouseclickflag = False
+                    #ドラッ供御の処理
+                    print("ok")
 
     def Coordinate_transformation(self, x, y, rect):
         rect.x = x*53.5+171
