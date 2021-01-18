@@ -24,4 +24,4 @@ class Koma_group:
 
     def draw(self, screem):
         for sprite in self.sprites():
-            screem.blit(sprite.image, sprite.rect)    
+            screem.blit(sprite.image, sprite.rect)

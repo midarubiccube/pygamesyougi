@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 from koma import Komaclass
 from mygroup import Koma_group
+from touch import touch_class
 
 koma_img_route = ["ho", "honaru", "kyousya", "kyousyanaru", "keima", "keimanaru", "ginn", "ginnnaru", "kinn", "ou", "gyoku", "hisya", "hisyanaru", "kaku", "kakunaru"]
 
@@ -49,4 +50,8 @@ def koma_init():
     #飛車インスタント化
     koma_group.add(Komaclass(x=1, y=1, image=koma_img_route[11], promotionflag=True, promotionimage=koma_img_route[12], kind="hisya", opponent=True))
     koma_group.add(Komaclass(x=7, y=1, image=koma_img_route[13], promotionflag=True, promotionimage=koma_img_route[14], kind="kaku", opponent=True))
-    return koma_group
+    touch_group = pygame.sprite.Group()
+    for i in range(9):
+        for j in range(9):
+            touch_group.add(touch_class(i, j))
+    return koma_group, touch_group
