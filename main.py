@@ -18,12 +18,11 @@ def init():
     pygame.init() # 初期化
     screen = pygame.display.set_mode(SCR_RECT.size)
     pygame.display.set_caption("Pygame Test")
-    pygame.display.set_icon(pygame.transform.flip(pygame.image.load("asset/icon.png"), 90, 90))
+    pygame.display.set_icon(pygame.image.load("asset/icon.png"))
     startstage(screen, SCR_RECT)
-    koma_group = koma_init()
-    return screen, koma_group
+    return screen
 
-def syori(screen, koma_group, bg, rect_bg, MOUSE_CLICK_FLAG = False):
+def syori(screen, koma_group, boadimg, rect_boadimg, backimg, rect_backimg, MOUSE_CLICK_FLAG = False):
     mx, my = 0, 0
     while(True):
         for event in pygame.event.get(): # 終了処理
@@ -44,21 +43,27 @@ def syori(screen, koma_group, bg, rect_bg, MOUSE_CLICK_FLAG = False):
 
             if event.type == MOUSEMOTION:
                 mx, my = event.pos
-
-        screen.fill((255, 255, 255, 0)) # 背景色の指定。RGBのはず
-        screen.blit(bg, rect_bg) # 背景画像の描画
+        screen.fill((0, 20, 0, 0))
+        #screen.fill((255, 255, 255, 0)) # 背景色の指定。RGBのはず
+        screen.blit(backimg, rect_backimg)
+        screen.blit(boadimg, rect_boadimg) 
         koma_group.update(MOUSE_CLICK_FLAG, mx, my, koma_group)
         koma_group.draw(screen)
         pygame.time.wait(1) # 更新間隔。多分ミリ秒
         pygame.display.update() # 画面更新
         
 def main():
-    screen, koma_group = init()
-    bg = pygame.image.load("asset/back.jpg").convert_alpha()
-    rect_bg = bg.get_rect()
-    rect_bg.x = 150
-    rect_bg.y = 0
-    syori(screen, koma_group, bg, rect_bg)
+    screen = init()
+    koma_group = koma_init()
+
+    boadimg = pygame.image.load("asset/boad.jpg").convert_alpha()
+    rect_boadimg = boadimg.get_rect()
+    rect_boadimg.x = 150
+    rect_boadimg.y = 0
+
+    backimg = pygame.image.load("asset/back.jpg").convert_alpha()
+    rect_backimg = backimg.get_rect()
+    syori(screen, koma_group, boadimg, rect_boadimg, backimg, rect_backimg)
 
 if __name__ == "__main__":
     main()
