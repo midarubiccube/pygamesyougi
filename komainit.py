@@ -1,11 +1,12 @@
 import pygame
 from pygame.locals import *
 from koma import Komaclass
+from mygroup import Koma_group
 
 koma_img_route = ["ho", "honaru", "kyousya", "kyousyanaru", "keima", "keimanaru", "ginn", "ginnnaru", "kinn", "ou", "gyoku", "hisya", "hisyanaru", "kaku", "kakunaru"]
 
 def koma_init():
-    koma_group = pygame.sprite.Group()
+    koma_group = Koma_group()
     #歩インスタント化
     for i in range(9):
         koma_group.add(Komaclass(x=i, y=6, image=koma_img_route[0], promotionflag=True, promotionimage=koma_img_route[1], kind="ho", opponent=False))      

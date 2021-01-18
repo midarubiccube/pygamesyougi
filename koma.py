@@ -29,15 +29,17 @@ class Komaclass(pygame.sprite.Sprite):
     def draw(self, screen):
         screen.blit(self.image, self.rect)
 
-    def update(self, MOUSE_CLICK_FLAG, mx, my, koma_group):
+    def update(self, MOUSE_CLICK_FLAG, mx, my, koma_group, MOUSEDRAGSTART):
         if self.opponent == False:
             if MOUSE_CLICK_FLAG == True:
                 if self.rect.collidepoint(mx, my) and not self.mousetouchflag == True:
-                    koma_list = pygame.sprite.spritecollide(self, koma_group, dokill= False, collided = None)
-                    if len(koma_list) > 1:
-                        for sprite in koma_list:
-                            if not sprite == self:
-                                sprite.mousetouchflag = True
+                    if MOUSEDRAGSTART == True:
+                        koma_group.top_to(self)
+                        koma_list = koma_group.group_list
+                        if len(koma_list) > 1:
+                            for sprite in koma_list:
+                                if not sprite == self:
+                                    sprite.mousetouchflag = True
                     self.rect.x = mx - self.width / 2
                     self.rect.y = my - self.height / 2
                     self.mouseclickflag = True
