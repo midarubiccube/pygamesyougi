@@ -9,8 +9,6 @@ x, y = 800, 800
 
 SCR_RECT = Rect(0, 0, 800, 500)
 
-
-
 #初期化する
 def init():
     pygame.init() # 初期化
