@@ -71,6 +71,10 @@ class Komaclass(pygame.sprite.Sprite):
                             self.Coordinate_transformation()
                             for touch in touch_group.sprites():
                                 touch.able = False
+                        else:
+                            self.Coordinate_transformation()
+                            for touch in touch_group.sprites():
+                                touch.able = False
 
     def search(self, touch_group):
         self.list = touch_group.sprites()
