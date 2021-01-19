@@ -1,4 +1,4 @@
 # pygamesyougi
 pythonのpygameを使って作っています
-# 仕組み
+作成中なのでmainを実行しても動きません
 
