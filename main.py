@@ -48,8 +48,8 @@ def syori(screen, koma_group, touch_group, boadimg, rect_boadimg, backimg, rect_
         #screen.fill((255, 255, 255, 0)) # 背景色の指定。RGBのはず
         screen.blit(backimg, rect_backimg)
         screen.blit(boadimg, rect_boadimg)
-        touch_group.update()
         koma_group.update(MOUSE_CLICK_FLAG, mx, my, koma_group, touch_group, MOUSEDRAGSTART)
+        touch_group.update()
         touch_group.draw(screen)
         koma_group.draw(screen)
         pygame.time.wait(10) # 更新間隔。多分ミリ秒
@@ -66,6 +66,7 @@ def main():
 
     backimg = pygame.image.load("asset/back.jpg").convert_alpha()
     rect_backimg = backimg.get_rect()
+    
     syori(screen, koma_group, touch_group, boadimg, rect_boadimg, backimg, rect_backimg)
 
 if __name__ == "__main__":

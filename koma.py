@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 
 class Komaclass(pygame.sprite.Sprite):
-    def __init__(self, x, y, image, promotionflag, promotionimage, kind, opponent):
+    def __init__(self, x, y, image, promotionflag, promotionimage, kind, opponent, touch_group):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load("asset/koma/" + image + ".png")
         if opponent == True:
@@ -19,10 +19,20 @@ class Komaclass(pygame.sprite.Sprite):
         self.x = x
         self.y = y
         self.Coordinate_transformation()
+
         self.kind = kind
+
+        lists = pygame.sprite.spritecollide(self, touch_group, dokill=False, collided = None)
+        self.touchplace = lists[0]
+        self.touchplace.onkoma = True
+        self.touchplace.komakind = kind
+        #成る時の処理設定
+
         self.promotionflag = promotionflag
         self.promotion = False
+
         self.opponent = opponent
+        
         self.mouseclickflag = False
         self.mousetouchflag = False
         
@@ -33,6 +43,7 @@ class Komaclass(pygame.sprite.Sprite):
         if self.opponent == False:
             if MOUSE_CLICK_FLAG == True:
                 if self.rect.collidepoint(mx, my) and not self.mousetouchflag == True:
+                    self.search()
                     if MOUSEDRAGSTART == True:
                         koma_group.top_to(self)
                         koma_list = koma_group.group_list
@@ -48,8 +59,20 @@ class Komaclass(pygame.sprite.Sprite):
                     self.mouseclickflag = False
                     if len(pygame.sprite.spritecollide(self, touch_group, dokill=False, collided = None)) > 0:
                         lists = pygame.sprite.spritecollide(self, touch_group, dokill=False, collided = None)
-                        self.x, self.y = lists[0].x, lists[0].y
-                        self.Coordinate_transformation()
+                        if lists[0].able == True:
+                            self.touchplace.onkoma = False
+                            self.touchplace = lists[0]
+                            self.touchplace.onkoma = True
+                            self.touchplace.komakind = self.kind
+                            self.x, self.y = self.touchplace.x, self.touchplace.y
+                            self.Coordinate_transformation()
+
+    def search(self, touch_group):
+        for i in touch_group.sprites():
+            lists = []
+            lists.append(i
+        if self.kind = "ho":
+
 
     def Coordinate_transformation(self):
         self.rect.x = self.x*53.5+171.9
