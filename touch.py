@@ -21,10 +21,10 @@ class touch_class(pygame.sprite.Sprite):
         screen.blit(self.image, self.rect)
 
     def update(self):
-        if self.onkoma == True:
-            self.image = self.Noneimg
-        else:
+        if self.able == True:
             self.image = self.ableimg
+        else:
+            self.image = self.Noneimg
 
     def Coordinate_transformation(self, x, y):
         self.rect.x = x*53.5+172

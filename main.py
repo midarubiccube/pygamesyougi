@@ -41,7 +41,6 @@ def syori(screen, koma_group, touch_group, boadimg, rect_boadimg, backimg, rect_
                 MOUSEDRAGSTART = False
                 for koma in koma_group.sprites():
                     koma.mousetouchflag =False
-
             if event.type == MOUSEMOTION:
                 mx, my = event.pos
         screen.fill((0, 20, 0, 0))

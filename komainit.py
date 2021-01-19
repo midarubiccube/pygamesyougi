@@ -11,7 +11,6 @@ def koma_init():
     for i in range(9):
         for j in range(9):
             touch_group.add(touch_class(i, j))
-
     koma_group = Koma_group()
     #歩インスタント化
     for i in range(9):

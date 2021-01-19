@@ -35,6 +35,8 @@ class Komaclass(pygame.sprite.Sprite):
         
         self.mouseclickflag = False
         self.mousetouchflag = False
+
+        self.list = None
         
     def draw(self, screen):
         screen.blit(self.image, self.rect)
@@ -43,8 +45,8 @@ class Komaclass(pygame.sprite.Sprite):
         if self.opponent == False:
             if MOUSE_CLICK_FLAG == True:
                 if self.rect.collidepoint(mx, my) and not self.mousetouchflag == True:
-                    self.search()
                     if MOUSEDRAGSTART == True:
+                        self.search(touch_group)
                         koma_group.top_to(self)
                         koma_list = koma_group.group_list
                         if len(koma_list) > 1:
@@ -59,6 +61,7 @@ class Komaclass(pygame.sprite.Sprite):
                     self.mouseclickflag = False
                     if len(pygame.sprite.spritecollide(self, touch_group, dokill=False, collided = None)) > 0:
                         lists = pygame.sprite.spritecollide(self, touch_group, dokill=False, collided = None)
+                        #print(lists[0].y)
                         if lists[0].able == True:
                             self.touchplace.onkoma = False
                             self.touchplace = lists[0]
@@ -66,13 +69,23 @@ class Komaclass(pygame.sprite.Sprite):
                             self.touchplace.komakind = self.kind
                             self.x, self.y = self.touchplace.x, self.touchplace.y
                             self.Coordinate_transformation()
+                            for touch in touch_group.sprites():
+                                touch.able = False
 
     def search(self, touch_group):
-        for i in touch_group.sprites():
-            lists = []
-            lists.append(i
-        if self.kind = "ho":
+        self.list = touch_group.sprites()
+        if self.kind == "ho":
+            touch = self.get(self.x, self.y-1)
+            #print("predict" + str(touch.x) + " " + str(touch.y))
+            """
+            if touch.y < 2:
+                #成るときの処理
+                pass
+            """
+            touch.able = True
 
+    def get(self, x, y):
+        return self.list[x*9+y]
 
     def Coordinate_transformation(self):
         self.rect.x = self.x*53.5+171.9
