@@ -15,6 +15,10 @@ class Koma_group:
     def update(self, *args, **kwargs):
         for sprite in self.sprites():
             sprite.update(*args, **kwargs)
+
+    def check(self, *arg, **kwargs):
+        for sprite in self.sprites():
+            sprite.check(*arg, **kwargs)
     
     def top_to(self, sprite):
         index = self.group_list.index(sprite)

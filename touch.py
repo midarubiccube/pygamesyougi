@@ -12,7 +12,7 @@ class touch_class(pygame.sprite.Sprite):
         self.rect = Rect(0, 0, self.width, self.height)
         self.Coordinate_transformation(x, y)
         self.onkoma = False
-        self.komakind = None
+        self.komaself = None
         self.able = False
         self.x = x
         self.y = y
