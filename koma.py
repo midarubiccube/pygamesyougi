@@ -63,21 +63,30 @@ class Komaclass(pygame.sprite.Sprite):
                     if len(pygame.sprite.spritecollide(self, touch_group, dokill=False, collided = None)) > 0:
                         lists = pygame.sprite.spritecollide(self, touch_group, dokill=False, collided = None)
                         if lists[0].able == True or lists == None:
-                            self.touchplace.onkoma = False
-                            self.touchplace.komaself = None
-                            self.touchplace = lists[0]
+                            if lists[0].onkoma == True:
+                                print(lists)
+                                if lists[0].komaself.opponent == True:
+                                    pass
+                                self.touchplace.onkoma = False
+                                self.touchplace.komaself = None
+                                self.touchplace = lists[0]
                             
-                            self.touchplace.komaself = self
+                                self.touchplace.komaself = self
+                            
 
-                            if self.touchplace.onkoma == True:
-                                print("touch")
-                            else:
-                                self.touchplace.onkoma = True
+                                if self.touchplace.onkoma == True:
+                                    print("touch")
+                                else:
+                                    self.touchplace.onkoma = True
                                 
-                            self.x, self.y = self.touchplace.x, self.touchplace.y
-                            self.Coordinate_transformation()
-                            for touch in touch_group.sprites():
-                                touch.able = False
+                                self.x, self.y = self.touchplace.x, self.touchplace.y
+                                self.Coordinate_transformation()
+                                for touch in touch_group.sprites():
+                                    touch.able = False
+                            else:
+                                self.Coordinate_transformation()
+                                for touch in touch_group.sprites():
+                                    touch.able = False
                         else:
                             self.Coordinate_transformation()
                             for touch in touch_group.sprites():
@@ -97,9 +106,14 @@ class Komaclass(pygame.sprite.Sprite):
                 pass
             """
         if self.kind == "ou" or self.kind == "gyoku":
+            touchlist.append(self.get(self.x+1, self.y-1))
             touchlist.append(self.get(self.x, self.y-1))
-            touchlist.append(self.get(self.x, self.y-2))
-            print(self.get(self.x, self.y-2))
+            touchlist.append(self.get(self.x-1, self.y-1))
+            touchlist.append(self.get(self.x, self.y-1))
+            touchlist.append(self.get(self.x, self.y+1))
+            touchlist.append(self.get(self.x+1, self.y+1))
+            touchlist.append(self.get(self.x, self.y+1))
+            touchlist.append(self.get(self.x-1, self.y+1))
 
         for touch in touchlist:
             if not touch == None:
