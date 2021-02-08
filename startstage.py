@@ -6,7 +6,10 @@ def startstage(screen, SCR_RECT):
     #pygame.mixer.music.load("asset/タイトル.wav")
     #pygame.mixer.music.play(loops=1, start=0.0)
     while(press_space):
-        screen.fill((0, 0, 0, 255))
+        backtitle = pygame.image.load("asset/titleback.png").convert_alpha()
+        rect_backtitle = backtitle.get_rect()
+        screen.blit(backtitle, rect_backtitle)
+        
         title_font = pygame.font.SysFont(None, 80)
         title = title_font.render("Syougi online Game", False, (255,0,0))
         screen.blit(title, ((SCR_RECT.width-title.get_width())/2, 100))

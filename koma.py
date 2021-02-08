@@ -25,7 +25,7 @@ class Komaclass(pygame.sprite.Sprite):
         lists = pygame.sprite.spritecollide(self, touch_group, dokill=False, collided = None)
         self.touchplace = lists[0]
         self.touchplace.onkoma = True
-        self.touchplace.self = self
+        self.touchplace.komaself = self
 
         #成る時の処理設定
         self.promotionflag = promotionflag
@@ -62,30 +62,21 @@ class Komaclass(pygame.sprite.Sprite):
                     self.mouseclickflag = False
                     if len(pygame.sprite.spritecollide(self, touch_group, dokill=False, collided = None)) > 0:
                         lists = pygame.sprite.spritecollide(self, touch_group, dokill=False, collided = None)
-                        if lists[0].able == True or lists == None:
-                            if lists[0].onkoma == True:
-                                print(lists)
-                                if lists[0].komaself.opponent == True:
-                                    pass
-                                self.touchplace.onkoma = False
-                                self.touchplace.komaself = None
-                                self.touchplace = lists[0]
+                        if lists[0].able == True:
+                            self.touchplace.onkoma = False
+                            beforekomaself = None
+                            if self.touchplace.komaself == None:
+                                beforekomaself = self.touchplace.komaself
+                            self.touchplace.komaself = None
+                            self.touchplace = lists[0]
                             
-                                self.touchplace.komaself = self
-                            
-
-                                if self.touchplace.onkoma == True:
-                                    print("touch")
-                                else:
-                                    self.touchplace.onkoma = True
-                                
-                                self.x, self.y = self.touchplace.x, self.touchplace.y
-                                self.Coordinate_transformation()
-                                for touch in touch_group.sprites():
-                                    touch.able = False
-                            else:
-                                self.Coordinate_transformation()
-                                for touch in touch_group.sprites():
+                            self.touchplace.komaself = self
+                            if self.touchplace.onkoma == True:
+                                print("touch") 
+                            self.touchplace.onkoma = True
+                            self.x, self.y = self.touchplace.x, self.touchplace.y
+                            self.Coordinate_transformation()
+                            for touch in touch_group.sprites():
                                     touch.able = False
                         else:
                             self.Coordinate_transformation()
@@ -93,6 +84,8 @@ class Komaclass(pygame.sprite.Sprite):
                                 touch.able = False
                     else:
                         self.Coordinate_transformation()
+                        for touch in touch_group.sprites():
+                                touch.able = False
 
     def search(self, touch_group):
         touchlist = []
@@ -100,24 +93,29 @@ class Komaclass(pygame.sprite.Sprite):
         if self.kind == "ho":
             touchlist.append(self.get(self.x, self.y-1))
             #print("predict" + str(touch.x) + " " + str(touch.y))
-            """
-            if touch.y < 2:
-                #成るときの処理
-                pass
-            """
+            
         if self.kind == "ou" or self.kind == "gyoku":
             touchlist.append(self.get(self.x+1, self.y-1))
             touchlist.append(self.get(self.x, self.y-1))
             touchlist.append(self.get(self.x-1, self.y-1))
-            touchlist.append(self.get(self.x, self.y-1))
-            touchlist.append(self.get(self.x, self.y+1))
+            touchlist.append(self.get(self.x-1, self.y))
+            touchlist.append(self.get(self.x+1, self.y))
             touchlist.append(self.get(self.x+1, self.y+1))
             touchlist.append(self.get(self.x, self.y+1))
             touchlist.append(self.get(self.x-1, self.y+1))
-
+        """
+        if touch.y < 2:
+            #成るときの処理
+            pass
+        """
         for touch in touchlist:
             if not touch == None:
                 touch.able = True
+                if touch.onkoma == True:
+                    if touch.komaself.opponent == True:
+                        touch.able = True
+                    else:
+                        touch.able = False 
             else:
                 print("You can't put here")
 
