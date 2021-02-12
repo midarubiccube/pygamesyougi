@@ -72,7 +72,7 @@ class Komaclass(pygame.sprite.Sprite):
                             
                             self.touchplace.komaself = self
                             if self.touchplace.onkoma == True:
-                                print("touch") 
+                                print("ok") 
                             self.touchplace.onkoma = True
                             self.x, self.y = self.touchplace.x, self.touchplace.y
                             self.Coordinate_transformation()
@@ -103,6 +103,35 @@ class Komaclass(pygame.sprite.Sprite):
             touchlist.append(self.get(self.x+1, self.y+1))
             touchlist.append(self.get(self.x, self.y+1))
             touchlist.append(self.get(self.x-1, self.y+1))
+        if self.kind == "kinn":
+            touchlist.append(self.get(self.x+1, self.y-1))
+            touchlist.append(self.get(self.x, self.y-1))
+            touchlist.append(self.get(self.x-1, self.y-1))
+            touchlist.append(self.get(self.x-1, self.y))
+            touchlist.append(self.get(self.x+1, self.y))
+            touchlist.append(self.get(self.x, self.y+1))
+        if self.kind == "ginn":
+            touchlist.append(self.get(self.x+1, self.y-1))
+            touchlist.append(self.get(self.x, self.y-1))
+            touchlist.append(self.get(self.x-1, self.y-1))
+            touchlist.append(self.get(self.x+1, self.y+1))
+            touchlist.append(self.get(self.x-1, self.y+1))
+
+        if self.kind == "keima":
+            touchlist.append(self.get(self.x+1, self.y-2))
+            touchlist.append(self.get(self.x-1, self.y-2))
+        
+        if self.kind == "kyousya":
+            for i in range(9):
+                touch = self.get(self.x, self.y-(i+1))
+                if not touch == None:
+                    if touch.onkoma == True:
+                        if touch.komaself.opponent == True:
+                            touchlist.append(touch)
+                        break
+                    else:
+                        touchlist.append(touch)
+            
         """
         if touch.y < 2:
             #成るときの処理
@@ -117,6 +146,7 @@ class Komaclass(pygame.sprite.Sprite):
                     else:
                         touch.able = False 
             else:
+                pass
                 print("You can't put here")
 
     def get(self, x, y):
