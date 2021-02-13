@@ -139,28 +139,49 @@ class Komaclass(pygame.sprite.Sprite):
                     else:
                         touchlist.append(touch)
 
-        if self.kind == "hisya":
-            flag1 = True
-            flag2 = True
-            for i in range(9):
-                touch1 = self.get(self.x-(i-1), self.y)
-                touch2 = self.get(self.x+(i-1), self.y-(i+1))
-                if not touch1 == None and flag1:
-                    if touch1.onkoma == True:
-                        if touch1.komaself.opponent == True:
-                            touchlist.append(touch1)
-                        flag1 = False
+        if self.kind == "kaku":
+            for j in range(4):
+                flag = True
+                for i in range(9):
+                    if j == 0:
+                        touch = self.get(self.x-(i+1), self.y-(i+1))
+                    elif j == 1:
+                        touch = self.get(self.x+(i+1), self.y+(i+1))
+                    elif j == 2:
+                        touch = self.get(self.x+(i+1), self.y-(i+1))
+                    elif j == 3:
+                        touch = self.get(self.x-(i+1), self.y+(i+1))
+                    if not touch == None and flag:
+                        if touch.onkoma == True:
+                            if touch.komaself.opponent == True:
+                                touchlist.append(touch)
+                            flag = False
+                        else:
+                            touchlist.append(touch)
                     else:
-                        touchlist.append(touch1)
-                if not touch2 == None and flag2:
-                    if touch2.onkoma == True:
-                        if touch2.komaself.opponent == True:
-                            touchlist.append(touch2)
-                        flag2 = False
-                    else:
-                        touchlist.append(touch2)
+                        flag = False
 
-            
+        if self.kind == "hisya":
+            for j in range(4):
+                flag = True
+                for i in range(9):
+                    if j == 0:
+                        touch = self.get(self.x-(i+1), self.y)
+                    elif j == 1:
+                        touch = self.get(self.x+(i+1), self.y)
+                    elif j == 2:
+                        touch = self.get(self.x, self.y-(i+1))
+                    elif j == 3:
+                        touch =  self.get(self.x, self.y+(i+1))
+                    if not touch == None and flag:
+                        if touch.onkoma == True:
+                            if touch.komaself.opponent == True:
+                                touchlist.append(touch)
+                            flag = False
+                        else:
+                            touchlist.append(touch)
+                    else:
+                        flag = False
         """
         if touch.y < 2:
             #成るときの処理
