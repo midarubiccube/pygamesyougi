@@ -6,6 +6,7 @@ from startstage import startstage
 from komainit import koma_init
 from get_koma import Get_koma
 from warning import Warning
+import os
 
 x, y = 800, 800
 
@@ -16,7 +17,7 @@ def init():
     pygame.init() # 初期化
     screen = pygame.display.set_mode(SCR_RECT.size)
     pygame.display.set_caption("syougionline")
-    pygame.display.set_icon(pygame.image.load("asset/icon.png"))
+    pygame.display.set_icon(pygame.image.load(os.path.join(os.getcwd(), "asset\\"+"icon.png")))
     startstage(screen, SCR_RECT)
     return screen
 
@@ -65,12 +66,12 @@ def main():
     screen = init()
     koma_group, touch_group = koma_init()
 
-    boadimg = pygame.image.load("asset/boad.jpg").convert_alpha()
+    boadimg = pygame.image.load(os.path.join(os.getcwd(), "asset\\"+"boad.jpg")).convert_alpha()
     rect_boadimg = boadimg.get_rect()
     rect_boadimg.x = 150
     rect_boadimg.y = 0
 
-    backimg = pygame.image.load("asset/back.jpg").convert_alpha()
+    backimg = pygame.image.load(os.path.join(os.getcwd(), "asset\\"+"back.jpg")).convert_alpha()
     rect_backimg = backimg.get_rect()
     
     syori(screen, koma_group, touch_group, boadimg, rect_boadimg, backimg, rect_backimg)

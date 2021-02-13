@@ -1,16 +1,17 @@
 import pygame
 from pygame.locals import *
 from tkinter import messagebox
+import os
 
 class Komaclass(pygame.sprite.Sprite):
     def __init__(self, x, y, image, promotionflag, promotionimagepath, kind, opponent, touch_group):
         pygame.sprite.Sprite.__init__(self)
-        self.notpromotionimage = pygame.image.load("asset/koma/" + image + ".png")
+        self.notpromotionimage = pygame.image.load(os.path.join(os.getcwd(), "asset\\koma\\"+ image + ".png"))
         if opponent == True:
             self.notpromotionimage = pygame.transform.flip(self.notpromotionimage, 90, 90)
         self.image = self.notpromotionimage
         if promotionflag == True:
-            self.promotionimage = pygame.image.load("asset/koma/" + promotionimagepath + ".png")
+            self.promotionimage = pygame.image.load(os.path.join(os.getcwd(), "asset\\koma\\"+ promotionimagepath + ".png"))
             if opponent == True:
                 self.promotionimage = pygame.transform.flip(self.promotionimage, 90, 90)
         self.promotionflag = promotionflag

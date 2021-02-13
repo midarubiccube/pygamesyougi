@@ -1,11 +1,12 @@
 import pygame
 from pygame.locals import *
+import os
 
 class Warning(pygame.sprite.Sprite):
     def __init__(self):
         self.count = 0
         self.showflag = 0
-        self.image1 = pygame.image.load("asset/can't.png")
+        self.image1 = pygame.image.load(os.path.join(os.getcwd(), "asset\\"+"can't.png"))
         self.flag = False 
 
     def show(self, number):

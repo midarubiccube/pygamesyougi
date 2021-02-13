@@ -1,13 +1,14 @@
 import pygame
 from pygame.locals import *
 from koma import Komaclass
+import os
 
 class Koma_group:
     def __init__(self):
         self.group_list = []
-        self.komano = pygame.mixer.Sound("asset/sound/komano.mp3")
-        self.komaon = pygame.mixer.Sound("asset/sound/komaon.wav")
-        self.komaget = pygame.mixer.Sound("asset/sound/komaget.mp3")
+        self.komano = pygame.mixer.Sound(os.path.join(os.getcwd(), "asset\\sound\\"+"komano.mp3"))
+        self.komaon = pygame.mixer.Sound(os.path.join(os.getcwd(), "asset\\sound\\"+"komaon.wav"))
+        self.komaget = pygame.mixer.Sound(os.path.join(os.getcwd(), "asset\\sound\\"+"komaget.mp3"))
     
     def sprites(self):
         return list(self.group_list)

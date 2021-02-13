@@ -1,11 +1,12 @@
 import pygame
 from pygame.locals import *
+import os
 
 class touch_class(pygame.sprite.Sprite):
     def __init__(self, x, y):
         pygame.sprite.Sprite.__init__(self)
-        self.Noneimg = pygame.image.load("asset/None.png")
-        self.ableimg = pygame.image.load("asset/able.png")
+        self.Noneimg = pygame.image.load(os.path.join(os.getcwd(), "asset\\"+"None.png"))
+        self.ableimg = pygame.image.load(os.path.join(os.getcwd(), "asset\\"+"able.png"))
         self.image = self.Noneimg
         self.width = self.image.get_width()
         self.height = self.image.get_height()
