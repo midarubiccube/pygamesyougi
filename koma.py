@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+from tkinter import messagebox
 
 class Komaclass(pygame.sprite.Sprite):
     def __init__(self, x, y, image, promotionflag, promotionimagepath, kind, opponent, touch_group):
@@ -53,7 +54,7 @@ class Komaclass(pygame.sprite.Sprite):
             koma_group.top_to(self)
             self.mousetouchflag = True
 
-    def update(self, MOUSE_CLICK_FLAG, mx, my, koma_group, touch_group, MOUSEDRAGSTART, get_koma):
+    def update(self, MOUSE_CLICK_FLAG, mx, my, koma_group, touch_group, MOUSEDRAGSTART, get_koma, warning):
         if self.opponent == False:
             if MOUSE_CLICK_FLAG:
                 if self.mousetouchflag:
@@ -86,6 +87,7 @@ class Komaclass(pygame.sprite.Sprite):
                         else:
                             self.Coordinate_transformation()
                             koma_group.komano_play()
+                            warning.show(1)
                             for touch in touch_group.sprites():
                                 touch.able = False
                     else:
