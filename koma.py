@@ -12,7 +12,7 @@ class Komaclass(pygame.sprite.Sprite):
             self.promotionimage = pygame.image.load("asset/koma/" + promotionimagepath + ".png")
             if opponent == True:
                 self.promotionimage = pygame.transform.flip(self.promotionimage, 90, 90)
-
+        self.promotionflag = promotionflag
         self.width = self.image.get_width()
         self.height = self.image.get_height()
         self.rect = Rect(0, 0, self.width, self.height)
@@ -146,7 +146,12 @@ class Komaclass(pygame.sprite.Sprite):
     def Coordinate_transformation(self):
         self.rect.x = self.x*53.5+171.9
         self.rect.y = self.y*52.5+19
-
+    
     def get_function(self):
-        print(self.kind)
-        self.image = self.promotionimage
+        self.notpromotionimage = pygame.transform.flip(self.notpromotionimage, 90, 90)
+        if self.promotionflag:
+            self.promotionimage = pygame.transform.flip(self.promotionimage, 90, 90)
+        self.opponent = False
+        self.image = self.notpromotionimage
+        self.x = 9
+        self.Coordinate_transformation()
