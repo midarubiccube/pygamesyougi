@@ -199,11 +199,27 @@ class Komaclass(pygame.sprite.Sprite):
     def search_get(self, touch_group):
         self.list = touch_group.sprites()
         touchlist = []
-        for i in range(9):
-            for j in range(9):
-                touch = self.get(i, j)
-                if not touch.onkoma:
-                    touchlist.append(touch)
+        if self.kind == "ho":
+            for i in range(9):
+                hoflag = True
+                for j in range(9):
+                    touch = self.get(i, j)
+                    if touch.onkoma:
+                        if touch.komaself.kind == "ho":
+                            hoflag = False
+                if hoflag:
+                    for k in range(9):
+                        touch = self.get(i, k)
+                        if not touch.onkoma:
+                            touchlist.append(touch)
+                        
+
+        else:
+            for i in range(9):
+                for j in range(9):
+                    touch = self.get(i, j)
+                    if not touch.onkoma:
+                        touchlist.append(touch)
 
         for touch in touchlist:
             touch.able = True

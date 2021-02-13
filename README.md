@@ -1,4 +1,5 @@
 # pygamesyougi
 pythonのpygameを使って作っています
-作成中なのでmainを実行しても動きません
+作成している途中なので
+
 
