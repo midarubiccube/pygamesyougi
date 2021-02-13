@@ -46,7 +46,7 @@ def syori(screen, koma_group, touch_group, boadimg, rect_boadimg, backimg, rect_
                 mousestart = True 
                 MOUSE_CLICK_FLAG = False 
                 for koma in koma_group.sprites():
-                    koma.mousetouchflag =False
+                    koma.mousetouchflag = False
 
             if event.type == MOUSEMOTION:
                 mx, my = event.pos
@@ -59,10 +59,8 @@ def syori(screen, koma_group, touch_group, boadimg, rect_boadimg, backimg, rect_
 
         touch_group.draw(screen)
         koma_group.draw(screen)
-
-        pygame.time.wait(30)
-        
         pygame.display.update()
+        pygame.time.wait(30) 
         
 def main():
     screen = init()

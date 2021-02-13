@@ -2,16 +2,16 @@ import pygame
 from pygame.locals import *
 
 class Komaclass(pygame.sprite.Sprite):
-    def __init__(self, x, y, image, promotionflag, promotionimage, kind, opponent, touch_group):
+    def __init__(self, x, y, image, promotionflag, promotionimagepath, kind, opponent, touch_group):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load("asset/koma/" + image + ".png")
+        self.notpromotionimage = pygame.image.load("asset/koma/" + image + ".png")
         if opponent == True:
-            self.image = pygame.transform.flip(self.image, 90, 90)
-    
-        if promotionflag == False:
-            self.promotionimage = pygame.image.load("asset/koma/" + image + ".png")
+            self.notpromotionimage = pygame.transform.flip(self.notpromotionimage, 90, 90)
+        self.image = self.notpromotionimage
+        if promotionflag == True:
+            self.promotionimage = pygame.image.load("asset/koma/" + promotionimagepath + ".png")
             if opponent == True:
-                self.promotionimage = pygame.transform.flip(self.image, 90, 90)
+                self.promotionimage = pygame.transform.flip(self.promotionimage, 90, 90)
 
         self.width = self.image.get_width()
         self.height = self.image.get_height()
@@ -46,14 +46,12 @@ class Komaclass(pygame.sprite.Sprite):
             self.search(touch_group)
             koma_group.top_to(self)
             if len(koma_group.group_list) > 1:
-                for sprite in koma_group.group_list:
-                    if not sprite == self:
-                        sprite.mousetouchflag = True
+                self.mousetouchflag = True
 
     def update(self, MOUSE_CLICK_FLAG, mx, my, koma_group, touch_group, MOUSEDRAGSTART):
         if self.opponent == False:
             if MOUSE_CLICK_FLAG == True:
-                if self.rect.collidepoint(mx, my) and not self.mousetouchflag == True:
+                if self.mousetouchflag == True:
                     self.rect.x = mx - self.width / 2
                     self.rect.y = my - self.height / 2
                     self.mouseclickflag = True
@@ -64,15 +62,11 @@ class Komaclass(pygame.sprite.Sprite):
                         lists = pygame.sprite.spritecollide(self, touch_group, dokill=False, collided = None)
                         if lists[0].able == True:
                             self.touchplace.onkoma = False
-                            beforekomaself = None
-                            if self.touchplace.komaself == None:
-                                beforekomaself = self.touchplace.komaself
                             self.touchplace.komaself = None
                             self.touchplace = lists[0]
-                            
+                            if not self.touchplace.komaself == None:
+                                self.touchplace.komaself.get_function()
                             self.touchplace.komaself = self
-                            if self.touchplace.onkoma == True:
-                                print("ok") 
                             self.touchplace.onkoma = True
                             self.x, self.y = self.touchplace.x, self.touchplace.y
                             self.Coordinate_transformation()
@@ -145,10 +139,6 @@ class Komaclass(pygame.sprite.Sprite):
                         touch.able = True
                     else:
                         touch.able = False 
-            else:
-                pass
-                print("You can't put here")
-
     def get(self, x, y):
         if x < 9 and y < 9 and x > -1 and y > -1:
             return self.list[x*9+y]
@@ -156,3 +146,7 @@ class Komaclass(pygame.sprite.Sprite):
     def Coordinate_transformation(self):
         self.rect.x = self.x*53.5+171.9
         self.rect.y = self.y*52.5+19
+
+    def get_function(self):
+        print(self.kind)
+        self.image = self.promotionimage
