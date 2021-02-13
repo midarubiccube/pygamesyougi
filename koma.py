@@ -66,18 +66,24 @@ class Komaclass(pygame.sprite.Sprite):
                             self.touchplace = lists[0]
                             if not self.touchplace.komaself == None:
                                 self.touchplace.komaself.get_function()
+                                koma_group.komaget_play()
+                            else:
+                                koma_group.komaon_play()
                             self.touchplace.komaself = self
                             self.touchplace.onkoma = True
                             self.x, self.y = self.touchplace.x, self.touchplace.y
                             self.Coordinate_transformation()
+                            
                             for touch in touch_group.sprites():
                                     touch.able = False
                         else:
                             self.Coordinate_transformation()
+                            koma_group.komano_play()
                             for touch in touch_group.sprites():
                                 touch.able = False
                     else:
                         self.Coordinate_transformation()
+                        koma_group.komano_play()
                         for touch in touch_group.sprites():
                                 touch.able = False
 

@@ -5,6 +5,9 @@ from koma import Komaclass
 class Koma_group:
     def __init__(self):
         self.group_list = []
+        self.komano = pygame.mixer.Sound("asset/sound/komano.mp3")
+        self.komaon = pygame.mixer.Sound("asset/sound/komaon.wav")
+        self.komaget = pygame.mixer.Sound("asset/sound/komaget.mp3")
     
     def sprites(self):
         return list(self.group_list)
@@ -19,7 +22,7 @@ class Koma_group:
     def check(self, *arg, **kwargs):
         for sprite in self.sprites():
             sprite.check(*arg, **kwargs)
-            
+
     def top_to(self, sprite):
         index = self.group_list.index(sprite)
         tmp = self.group_list[len(self.group_list)-1]
@@ -29,3 +32,13 @@ class Koma_group:
     def draw(self, screem):
         for sprite in self.sprites():
             screem.blit(sprite.image, sprite.rect)
+
+    def komaon_play(self):
+        self.komaon.play()
+
+    def komano_play(self):
+        self.komano.play()
+        
+    def komaget_play(self):
+        self.komaget.play()
+

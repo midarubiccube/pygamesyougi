@@ -53,7 +53,7 @@ def syori(screen, koma_group, touch_group, boadimg, rect_boadimg, backimg, rect_
         screen.fill((0, 20, 0, 0))
         screen.blit(backimg, rect_backimg)
         screen.blit(boadimg, rect_boadimg)
-
+        
         koma_group.update(MOUSE_CLICK_FLAG, mx, my, koma_group, touch_group, MOUSEDRAGSTART)
         touch_group.update()
 
