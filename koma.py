@@ -53,7 +53,7 @@ class Komaclass(pygame.sprite.Sprite):
             koma_group.top_to(self)
             self.mousetouchflag = True
 
-    def update(self, MOUSE_CLICK_FLAG, mx, my, koma_group, touch_group, MOUSEDRAGSTART):
+    def update(self, MOUSE_CLICK_FLAG, mx, my, koma_group, touch_group, MOUSEDRAGSTART, get_koma):
         if self.opponent == False:
             if MOUSE_CLICK_FLAG:
                 if self.mousetouchflag:
@@ -70,7 +70,7 @@ class Komaclass(pygame.sprite.Sprite):
                             self.touchplace.komaself = None
                             self.touchplace = lists[0]
                             if not self.touchplace.komaself == None:
-                                self.touchplace.komaself.get_function()
+                                self.touchplace.komaself.get_function(get_koma)
                                 koma_group.komaget_play()
                             else:
                                 koma_group.komaon_play()
@@ -213,7 +213,6 @@ class Komaclass(pygame.sprite.Sprite):
                         if not touch.onkoma:
                             touchlist.append(touch)
                         
-
         else:
             for i in range(9):
                 for j in range(9):
@@ -232,13 +231,13 @@ class Komaclass(pygame.sprite.Sprite):
         self.rect.x = self.x*53.5+171.9
         self.rect.y = self.y*52.5+19
     
-    def get_function(self):
+    def get_function(self, get_koma):
         self.notpromotionimage = pygame.transform.flip(self.notpromotionimage, 90, 90)
         if self.promotionflag:
             self.promotionimage = pygame.transform.flip(self.promotionimage, 90, 90)
         self.opponent = False
         self.getflag = True
         self.image = self.notpromotionimage
-        self.x = 9
+        get_koma.put(self)
         self.Coordinate_transformation()
         
