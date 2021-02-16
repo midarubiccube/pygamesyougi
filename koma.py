@@ -41,12 +41,13 @@ class Komaclass(pygame.sprite.Sprite):
         self.list = None
         self.getflag = False
 
+
     def draw(self, screen):
         screen.blit(self.image, self.rect)
 
     def check(self, mx, my, koma_group, touch_group):
         if self.rect.collidepoint(mx, my) and self.opponent == False and not self.getflag:
-            self.search(touch_group)
+            self.search(touch_group, True)
             koma_group.top_to(self)
             if len(koma_group.group_list) > 1:
                 self.mousetouchflag = True
@@ -80,7 +81,19 @@ class Komaclass(pygame.sprite.Sprite):
                             self.touchplace.onkoma = True
                             self.x, self.y = self.touchplace.x, self.touchplace.y
                             self.Coordinate_transformation()
-                            
+                            if self.getflag:
+                                if self.kind == "ho":
+                                    for j in range(9):
+                                        touch = self.get(self.x, j)
+                                        if touch.onkoma:
+                                            if touch.komaself.kind == "ho" and not touch.komaself.opponent:
+                                                print("二歩")
+                                elif self.kind == "kyousya" or self.kind == "keima" or self.kind == "ho":
+                                    print(self.search(touch_group, False))
+                                    if len(self.search(touch_group, False)) == 0:
+                                        
+                                        print("禁じて")
+
                             for touch in touch_group.sprites():
                                     touch.able = False
                             if self.getflag:
@@ -97,7 +110,7 @@ class Komaclass(pygame.sprite.Sprite):
                         for touch in touch_group.sprites():
                                 touch.able = False
 
-    def search(self, touch_group):
+    def search(self, touch_group, kind):
         touchlist = []
         self.list = touch_group.sprites()
         if self.kind == "ho":
@@ -190,38 +203,26 @@ class Komaclass(pygame.sprite.Sprite):
             #成るときの処理
             pass
         """
-        for touch in touchlist:
-            if not touch == None:
-                touch.able = True
-                if touch.onkoma:
-                    if touch.komaself.opponent == True:
-                        touch.able = True
-                    else:
-                        touch.able = False
+        if kind:
+            for touch in touchlist:
+                if not touch == None:
+                    touch.able = True
+                    if touch.onkoma:
+                        if touch.komaself.opponent == True:
+                            touch.able = True
+                        else:
+                            touch.able = False
+        else:
+            return touchlist
     
     def search_get(self, touch_group):
         self.list = touch_group.sprites()
         touchlist = []
-        if self.kind == "ho":
-            for i in range(9):
-                hoflag = True
-                for j in range(9):
-                    touch = self.get(i, j)
-                    if touch.onkoma:
-                        if touch.komaself.kind == "ho":
-                            hoflag = False
-                if hoflag:
-                    for k in range(9):
-                        touch = self.get(i, k)
-                        if not touch.onkoma:
-                            touchlist.append(touch)
-                        
-        else:
-            for i in range(9):
-                for j in range(9):
-                    touch = self.get(i, j)
-                    if not touch.onkoma:
-                        touchlist.append(touch)
+        for i in range(9):
+            for j in range(9):
+                touch = self.get(i, j)
+                if not touch.onkoma:
+                    touchlist.append(touch)
 
         for touch in touchlist:
             touch.able = True
