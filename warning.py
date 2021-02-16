@@ -21,7 +21,7 @@ class Warning(pygame.sprite.Sprite):
 
     def update(self):
         if self.flag == True:
-            if self.count != 10: 
+            if self.count != 25: 
                 self.count += 1
             else:
                 self.count = 0
