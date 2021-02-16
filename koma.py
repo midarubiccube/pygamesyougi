@@ -215,6 +215,7 @@ class Komaclass(pygame.sprite.Sprite):
         else:
             return touchlist
     
+    
     def search_get(self, touch_group):
         self.list = touch_group.sprites()
         touchlist = []
