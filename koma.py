@@ -1,6 +1,5 @@
 import pygame
 from pygame.locals import *
-from tkinter import messagebox
 import os
 
 class Komaclass(pygame.sprite.Sprite):
@@ -93,9 +92,11 @@ class Komaclass(pygame.sprite.Sprite):
                                     if len(self.search(touch_group, False)) == 0:
                                         
                                         print("禁じて")
+                            if self.y < 3:
+                                pass
 
                             for touch in touch_group.sprites():
-                                    touch.able = False
+                                touch.able = False
                             if self.getflag:
                                 self.getflag = False
                         else:

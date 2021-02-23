@@ -6,6 +6,7 @@ from startstage import startstage
 from komainit import koma_init
 from get_koma import Get_koma
 from warning import Warning
+from button import Button
 import os
 
 x, y = 800, 800
@@ -40,6 +41,7 @@ def syori(screen, koma_group, touch_group, boadimg, rect_boadimg, backimg, rect_
                 MOUSE_CLICK_FLAG = True
                 mx, my = event.pos
                 koma_group.check(mx, my, koma_group, touch_group)
+                
             if event.type == MOUSEBUTTONUP:
                 mousestart = True 
                 MOUSE_CLICK_FLAG = False 
@@ -48,6 +50,7 @@ def syori(screen, koma_group, touch_group, boadimg, rect_boadimg, backimg, rect_
 
             if event.type == MOUSEMOTION:
                 mx, my = event.pos
+
         screen.fill((0, 20, 0, 0))
         screen.blit(backimg, rect_backimg)
         screen.blit(boadimg, rect_boadimg)
@@ -59,8 +62,9 @@ def syori(screen, koma_group, touch_group, boadimg, rect_boadimg, backimg, rect_
         touch_group.draw(screen)
         koma_group.draw(screen)
         warning.draw(screen)
+
         pygame.display.update()
-        pygame.time.wait(30) 
+        pygame.time.wait(10) 
         
 def main():
     screen = init()
